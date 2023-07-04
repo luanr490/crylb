@@ -1,14 +1,14 @@
 const express = require("express");
+const router = express.Router();
 const app = express();
 const axios = require("axios");
 const { stringify } = require("querystring");
+const cors = require("cors");
 
 app.use(express.json());
-
+app.use(cors({ origin: "*" }));
 app.get("/", (req, res) => {
-  res.header(`Access-Control-Allow-Origin`, `*`);
-  res.setHeader("Content-Type", "application/json");
-
+  res.header("Content-Type", "application/json");
   /*let response = null;
   new Promise(async (resolve, reject) => {
     try {
@@ -34,10 +34,10 @@ app.get("/", (req, res) => {
       res.send(json);
     }
   });*/
-  const ok = { text: "Funcionou", status: 200 };
-  let tst = JSON.stringify(ok);
-  console.log(tst);
+  let val = { text: "Funcionou", status: 200 };
+  res.send(JSON.stringify(val));
 });
 
+app.use("/", router);
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
